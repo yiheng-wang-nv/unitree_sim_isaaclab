@@ -15,6 +15,7 @@ from isaaclab.managers import ObservationGroupCfg as ObsGroup
 from isaaclab.managers import ObservationTermCfg as ObsTerm
 from isaaclab.managers import SceneEntityCfg
 from isaaclab.managers import TerminationTermCfg as DoneTerm
+from isaaclab.managers import RewardTermCfg as RewTerm
 from isaaclab.utils import configclass
 
 from . import mdp
@@ -88,26 +89,39 @@ class ObservationsCfg:
 
 @configclass
 class TerminationsCfg:
-    # check if the object is out of the working range
-    success = DoneTerm(func=mdp.reset_object_estimate)# use task completion check function
+    # Commented out object-based termination since object doesn't exist
+    # success = DoneTerm(func=mdp.reset_object_estimate)# use task completion check function
+    pass
+
+def dummy_reward(env):
+    """Simple dummy reward function that returns zero for all environments"""
+    import torch
+    return torch.zeros(env.num_envs, device=env.device, dtype=torch.float)
+
+@configclass
+class RewardsCfg:
+    # Simple default reward for robot-only environment
+    reward = RewTerm(func=dummy_reward, weight=1.0)
 
 @configclass
 class EventCfg:
-    reset_object = EventTermCfg(
-        func=mdp.reset_root_state_uniform,  # use uniform distribution reset function
-        mode="reset",   # set event mode to reset
-        params={
-            # position range parameter
-            "pose_range": {
-                "x": [-0.05, 0.05],  # x axis position range: -0.05 to 0.0 meter
-                "y": [-0.05, 0.05],   # y axis position range: 0.0 to 0.05 meter
-            },
-            # speed range parameter (empty dictionary means using default value)
-            "velocity_range": {},
-            # specify
-            "asset_cfg": SceneEntityCfg("object"),
-        },
-    )
+    # Commented out object reset since object doesn't exist
+    # reset_object = EventTermCfg(
+    #     func=mdp.reset_root_state_uniform,  # use uniform distribution reset function
+    #     mode="reset",   # set event mode to reset
+    #     params={
+    #         # position range parameter
+    #         "pose_range": {
+    #             "x": [-0.05, 0.05],  # x axis position range: -0.05 to 0.0 meter
+    #             "y": [-0.05, 0.05],   # y axis position range: 0.0 to 0.05 meter
+    #         },
+    #         # speed range parameter (empty dictionary means using default value)
+    #         "velocity_range": {},
+    #         # specify
+    #         "asset_cfg": SceneEntityCfg("object"),
+    #     },
+    # )
+    pass
 
 
 @configclass
@@ -129,7 +143,7 @@ class PickPlaceG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
     terminations: TerminationsCfg = TerminationsCfg()    # termination configuration
     events = EventCfg()                                  # event configuration
     commands = None # command manager
-    rewards = None # reward manager
+    rewards: RewardsCfg = RewardsCfg()  # reward manager with dummy reward
     curriculum = None # curriculum manager
     def __post_init__(self):
         """Post initialization."""
@@ -150,16 +164,16 @@ class PickPlaceG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
         # create event manager
         self.event_manager = SimpleEventManager()
 
-        # register "reset object" event
-        self.event_manager.register("reset_object_self", SimpleEvent(
-            func=lambda env: base_mdp.reset_root_state_uniform(
-                env,
-                torch.arange(env.num_envs, device=env.device),
-                pose_range={"x": [-0.05, 0.05], "y": [0.0, 0.05]},
-                velocity_range={},
-                asset_cfg=SceneEntityCfg("object"),
-            )
-        ))
+        # Commented out object reset since object doesn't exist
+        # self.event_manager.register("reset_object_self", SimpleEvent(
+        #     func=lambda env: base_mdp.reset_root_state_uniform(
+        #         env,
+        #         torch.arange(env.num_envs, device=env.device),
+        #         pose_range={"x": [-0.05, 0.05], "y": [0.0, 0.05]},
+        #         velocity_range={},
+        #         asset_cfg=SceneEntityCfg("object"),
+        #     )
+        # ))
         self.event_manager.register("reset_all_self", SimpleEvent(
             func=lambda env: base_mdp.reset_scene_to_default(
                 env,
