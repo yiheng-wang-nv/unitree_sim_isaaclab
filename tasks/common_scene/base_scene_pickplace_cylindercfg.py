@@ -19,16 +19,16 @@ class TableCylinderSceneCfg(InteractiveSceneCfg): # inherit from the interactive
     defines a complete scene containing robot, object, table, etc.
     """
       # 1. room wall configuration - simplified configuration to avoid rigid body property conflicts
-    room_walls = AssetBaseCfg(
-        prim_path="/World/envs/env_.*/Room",
-        init_state=AssetBaseCfg.InitialStateCfg(
-            pos=[0.0, 0.0, 0],  # 房间中心点
-            rot=[1.0, 0.0, 0.0, 0.0]
-        ),
-        spawn=UsdFileCfg(
-            usd_path=f"{ISAAC_NUCLEUS_DIR}/Environments/Simple_Warehouse/warehouse.usd",  # use simple room model
-        ),
-    )
+    # room_walls = AssetBaseCfg(
+    #     prim_path="/World/envs/env_.*/Room",
+    #     init_state=AssetBaseCfg.InitialStateCfg(
+    #         pos=[0.0, 0.0, 0],  # 房间中心点
+    #         rot=[1.0, 0.0, 0.0, 0.0]
+    #     ),
+    #     spawn=UsdFileCfg(
+    #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Environments/Simple_Warehouse/warehouse.usd",  # use simple room model
+    #     ),
+    # )
     # print(f"ISAAC_NUCLEUS_DIR: {ISAAC_NUCLEUS_DIR}")
     #ISAAC_NUCLEUS_DIR: http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac
         # 1. table configuration - COMMENTED OUT

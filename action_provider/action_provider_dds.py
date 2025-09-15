@@ -4,6 +4,38 @@ from action_provider.action_base import ActionProvider
 from typing import Optional
 import torch
 from dds.dds_master import dds_manager
+
+hand_joint_names = [
+    'left_shoulder_pitch_joint',
+    'right_shoulder_pitch_joint',
+    'left_shoulder_roll_joint',
+    'right_shoulder_roll_joint',
+    'left_shoulder_yaw_joint',
+    'right_shoulder_yaw_joint',
+    'left_elbow_joint',
+    'right_elbow_joint',
+    'left_wrist_roll_joint',
+    'right_wrist_roll_joint',
+    'left_wrist_pitch_joint',
+    'right_wrist_pitch_joint',
+    'left_wrist_yaw_joint',
+    'right_wrist_yaw_joint',
+    'left_hand_index_0_joint',
+    'left_hand_middle_0_joint',
+    'left_hand_thumb_0_joint',
+    'right_hand_index_0_joint',
+    'right_hand_middle_0_joint',
+    'right_hand_thumb_0_joint',
+    'left_hand_index_1_joint',
+    'left_hand_middle_1_joint',
+    'left_hand_thumb_1_joint',
+    'right_hand_index_1_joint',
+    'right_hand_middle_1_joint',
+    'right_hand_thumb_1_joint',
+    'left_hand_thumb_2_joint',
+    'right_hand_thumb_2_joint',
+]
+
 class DDSActionProvider(ActionProvider):
     """Action provider based on DDS"""
     
@@ -113,7 +145,8 @@ class DDSActionProvider(ActionProvider):
                 "R_thumb_intermediate_joint":[4,1.5],
                 "R_thumb_distal_joint":[4,2.4],
             }
-        self.all_joint_names = self.env.scene["robot"].data.joint_names
+        # self.all_joint_names = self.env.scene["robot"].data.joint_names
+        self.all_joint_names = hand_joint_names
         self.joint_to_index = {name: i for i, name in enumerate(self.all_joint_names)}
         self.arm_action_pose = [self.joint_to_index[name] for name in self.arm_joint_mapping.keys()]
         self.arm_action_pose_indices = [self.arm_joint_mapping[name] for name in self.arm_joint_mapping.keys()]
