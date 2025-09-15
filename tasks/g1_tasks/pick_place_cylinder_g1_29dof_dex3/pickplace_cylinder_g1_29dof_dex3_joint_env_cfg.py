@@ -104,6 +104,10 @@ class RewardsCfg:
     reward = RewTerm(func=dummy_reward, weight=1.0)
 
 @configclass
+class RewardsCfg:
+    reward = RewTerm(func=mdp.compute_reward,weight=1.0)
+
+@configclass
 class EventCfg:
     # Commented out object reset since object doesn't exist
     # reset_object = EventTermCfg(
