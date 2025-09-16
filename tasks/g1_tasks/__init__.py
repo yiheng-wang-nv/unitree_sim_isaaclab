@@ -22,6 +22,7 @@ from . import move_cylinder_g1_29dof_dex1_wholebody
 from . import move_cylinder_g1_29dof_dex3_wholebody
 from . import move_cylinder_g1_29dof_inspire_wholebody
 from . import medical_g1_29dof_dex3
+from . import simple_wave_g1_29dof_dex3
 
 # export all modules
 __all__ = [
@@ -36,4 +37,5 @@ __all__ = [
         "move_cylinder_g1_29dof_dex3_wholebody",
         "move_cylinder_g1_29dof_inspire_wholebody",
         "medical_g1_29dof_dex3",
+        "simple_wave_g1_29dof_dex3",
 ]
