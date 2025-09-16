@@ -5,6 +5,7 @@ import tempfile
 import torch
 from dataclasses import MISSING
 
+import isaaclab.envs.mdp as base_mdp
 from isaaclab.assets import ArticulationCfg
 from isaaclab.envs import ManagerBasedRLEnvCfg
 from isaaclab.managers import ObservationGroupCfg as ObsGroup
@@ -153,7 +154,7 @@ class MedicalG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
         self.event_manager = SimpleEventManager()
 
         self.event_manager.register("reset_all_self", SimpleEvent(
-            func=lambda env: mdp.reset_scene_to_default(
+            func=lambda env: base_mdp.reset_scene_to_default(
                 env,
                 torch.arange(env.num_envs, device=env.device))
         ))
