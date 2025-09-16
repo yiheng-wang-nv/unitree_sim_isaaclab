@@ -18,6 +18,7 @@ import isaaclab.sim as sim_utils
 from isaaclab.assets import  AssetBaseCfg, RigidObjectCfg
 from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.sim.spawners.from_files.from_files_cfg import GroundPlaneCfg, UsdFileCfg
+from tasks.common_event.event_manager import SimpleEvent, SimpleEventManager
 from isaaclab.sensors import CameraCfg
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 import os
@@ -111,7 +112,7 @@ class RewardsCfg:
 
 @configclass
 class EventCfg:
-    reset_scene = EventTerm(func=mdp.reset_scene_to_default, mode="reset")
+    pass
 
 @configclass
 class MedicalG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
@@ -147,3 +148,12 @@ class MedicalG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.physx.gpu_found_lost_aggregate_pairs_capacity = 1024 * 1024 * 4
         self.sim.physx.gpu_total_aggregate_pairs_capacity = 16 * 1024
         self.sim.physx.friction_correlation_distance = 0.00625
+
+        # create event manager
+        self.event_manager = SimpleEventManager()
+
+        self.event_manager.register("reset_all_self", SimpleEvent(
+            func=lambda env: mdp.reset_scene_to_default(
+                env,
+                torch.arange(env.num_envs, device=env.device))
+        ))
