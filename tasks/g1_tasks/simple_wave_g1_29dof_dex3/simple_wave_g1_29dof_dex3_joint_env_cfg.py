@@ -23,6 +23,8 @@ from . import mdp
 
 from tasks.common_config import  G1RobotPresets, CameraPresets  # isort: skip
 from tasks.common_event.event_manager import SimpleEvent, SimpleEventManager
+from .g1_base_config import g1_29dof_dex3_base_fix, g1_front_camera
+
 
 # import public scene configuration
 from tasks.common_scene.base_scene_pickplace_cylindercfg import TableCylinderSceneCfg
@@ -39,13 +41,11 @@ class ObjectTableSceneCfg(TableCylinderSceneCfg):
     can add task-specific scene elements or override default configurations here
     """
     
-    # Humanoid robot w/ arms higher
-    # 5. humanoid robot configuration 
-    robot: ArticulationCfg = G1RobotPresets.g1_29dof_dex3_base_fix()
-    # 6. add camera configuration 
-    front_camera = CameraPresets.g1_front_camera()
     left_wrist_camera = CameraPresets.left_dex3_wrist_camera()
     right_wrist_camera = CameraPresets.right_dex3_wrist_camera()
+
+    robot: ArticulationCfg = g1_29dof_dex3_base_fix
+    front_camera = g1_front_camera
 
 ##
 # MDP settings
@@ -137,9 +137,6 @@ class SimpleWaveG129DEX3JointEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.physx.gpu_found_lost_aggregate_pairs_capacity = 1024 * 1024 * 4
         self.sim.physx.gpu_total_aggregate_pairs_capacity = 16 * 1024
         self.sim.physx.friction_correlation_distance = 0.00625
-
-
-
 
         # create event manager
         self.event_manager = SimpleEventManager()
