@@ -67,7 +67,7 @@ class G1RobotJointTemplates:
             "left_shoulder_pitch_joint": 0.0,
             "left_shoulder_roll_joint": 0.0,
             "left_shoulder_yaw_joint": 0.0,
-            "left_elbow_joint": 0.0,
+            "left_elbow_joint": -0.3,
             "left_wrist_roll_joint": 0.0,
             "left_wrist_pitch_joint": 0.0,
             "left_wrist_yaw_joint": 0.0,
