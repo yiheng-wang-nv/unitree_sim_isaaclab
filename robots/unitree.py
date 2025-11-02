@@ -27,6 +27,10 @@ G129_CFG_WITH_DEX3_BASE_FIX = ArticulationCfg(
             solver_velocity_iteration_count=4,
 
         ),
+        # collision_props=sim_utils.CollisionPropertiesCfg(
+        #     contact_offset=0.01,
+        #     rest_offset=0.001
+        # ),
 
     ),
     init_state=ArticulationCfg.InitialStateCfg(
@@ -140,16 +144,23 @@ G129_CFG_WITH_DEX3_BASE_FIX = ArticulationCfg(
             effort_limit=None,
             velocity_limit=None,
              stiffness={  # increase the stiffness (kp)
-                 ".*_shoulder_.*_joint": 300.0,
-                 ".*_elbow_joint": 400.0,
-                 ".*_wrist_.*_joint": 400.0,
+                 ".*_shoulder_.*_joint": 200.0,
+                 ".*_elbow_joint": 300.0,
+                 ".*_wrist_.*_joint": 300.0,
+                #  ".*_shoulder_.*_joint": 300.0,
+                #  ".*_elbow_joint": 400.0,
+                #  ".*_wrist_.*_joint": 400.0,
             },
              damping={    # increase the damping (kd)
-                 ".*_shoulder_.*_joint": 3.0,
-                 ".*_elbow_joint": 2.5,
-                 ".*_wrist_.*_joint": 2.5,
+                 ".*_shoulder_.*_joint": 4.0,
+                 ".*_elbow_joint": 3.5,
+                 ".*_wrist_.*_joint": 3.5,
+                #  ".*_shoulder_.*_joint": 3.0,
+                #  ".*_elbow_joint": 2.5,
+                #  ".*_wrist_.*_joint": 2.5,
              },
-            armature=None,
+            # armature=None,
+            armature=0.01,
         ),
         "hands": ImplicitActuatorCfg(
             joint_names_expr=[
@@ -157,17 +168,28 @@ G129_CFG_WITH_DEX3_BASE_FIX = ArticulationCfg(
                 ".*_hand_middle_.*_joint",
                 ".*_hand_thumb_.*_joint"
             ],
-            effort_limit=300,
+            effort_limit=4,
             velocity_limit=100.0,
             stiffness={
-                ".*": 100.0,
+                ".*": 40.0,
             },
             damping={
-                ".*": 10.0,
+                ".*": 20.0,
             },
             armature={
                 ".*": 0.1
             },
+            # effort_limit=300,
+            # velocity_limit=100.0,
+            # stiffness={
+            #     ".*": 100.0,
+            # },
+            # damping={
+            #     ".*": 10.0,
+            # },
+            # armature={
+            #     ".*": 0.1
+            # },
         ),
     },
 )

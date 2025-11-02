@@ -16,10 +16,10 @@ def reset_object_estimate(
     env: ManagerBasedRLEnv,
     object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
     min_x: float = -0.42,                # minimum x position threshold
-    max_x: float = 1.0,                # maximum x position threshold
-    min_y: float = 0.2,                # minimum y position threshold
-    max_y: float = 0.7,                # maximum y position threshold
-    min_height: float = 0.5,
+    max_x: float = 0.1,                # maximum x position threshold
+    min_y: float = 0.01,                # minimum y position threshold
+    max_y: float = 0.1,                # maximum y position threshold
+    min_height: float = 0.01,
 ) -> torch.Tensor:
    # when the object is not in the set return, reset
     # Get object entity from the scene
